@@ -1,0 +1,456 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prompt Programming Language</title>
+
+    <script type="module" src="!/w3c/tabs.js"></script>
+    <link rel="stylesheet" href="!/w3c/tabs.css" />
+
+    <script src="!/codemirror-5.65.12/codemirror.js"></script>
+    <link href="!/codemirror-5.65.12/codemirror.css" rel="stylesheet" />
+
+    <style>
+        html {
+            --highlight: rgb(0, 63, 255);
+        }
+
+        body {
+            display: grid;
+            justify-content: center;
+            grid-template-columns: 200px 640px;
+            line-height: 1.4rem;
+        }
+
+        header {
+            width: 100%;
+        }
+
+        header div {
+            position: fixed;
+            width: 200px;
+        }
+
+        article {
+            width: 100%;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        iframe {
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 1rem;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+        }
+
+        code.inline-example {
+            color: rgba(0,0,0,0.33);
+        }
+
+        code.inline-example em {
+            font-style: italic;
+            color: var(--highlight);
+        }
+
+        #download {
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            background: var(--highlight);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            font-family: sans-serif;
+        }
+
+        .description {
+        }
+
+        .example {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Prompt</h1>
+
+            <p>
+                Prompt is a programming language based on relational ai prompts. 
+            </p>
+            <p>
+                It's useful because it helps you chain multiple ai sessions together (REPL loops in programming lingo), and
+                weave them into the programming tools you already know.
+            </p>
+            <p>
+                Prompt is a tiny language, you can learn it in less than fifteen minutes.
+            </p>
+
+            <a id="download" href="" style="display: none;">Download</a>
+        </div>
+    </header>
+
+    <article class="content">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dbZ2ObcZn2U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+        <section class="tabs">
+            <h3 id="tablist-1">Examples</h3>
+
+            <div role="tablist" aria-labelledby="tablist-1" class="automatic">
+                <button id="tab-1" type="button" role="tab" aria-selected="true" aria-controls="tabpanel-1">
+                    <span class="focus">Table</span>
+                </button>
+
+                <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-2" tabindex="-1">
+                    <span class="focus">API Requests</span>
+                </button>
+
+                <button id="tab-3" type="button" role="tab" aria-selected="false" aria-controls="tabpanel-3" tabindex="-1">
+                    <span class="focus">Animal House</span>
+                </button>
+            </div>
+
+            <div id="tabpanel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+                <div class="example">
+                    <textarea id="exampleTable">
+table
+  direction: >
+    Answer this question with a yes or no answer. Is this input valid JSON
+    that can be used with Nodes console.table method cleanly?
+{
+  match $AI {
+    (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`
+  }
+}
+                    </textarea>
+                    <div class="example-output">
+                        <pre>
+    USER: {"foo":[ 1, 2, 3, 4]}
+    ┌─────────┬───┬───┬───┬───┐
+    │ (index) │ 0 │ 1 │ 2 │ 3 │
+    ├─────────┼───┼───┼───┼───┤
+    │   foo   │ 1 │ 2 │ 3 │ 4 │
+    └─────────┴───┴───┴───┴───┘
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tabpanel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" class="is-hidden">
+            </div>
+
+            <div id="tabpanel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" class="is-hidden">
+                <p>
+                Ida Henriette da Fonseca (July 27, 1802 – July 6, 1858) was a Danish opera singer and composer.
+                Ida Henriette da Fonseca was the daughter of Abraham da Fonseca (1776–1849) and Marie Sofie Kiærskou (1784–1863).
+                She and her sister Emilie da Fonseca were students of Giuseppe Siboni, choir master of the Opera in Copenhagen.
+                She was given a place at the royal Opera alongside her sister the same year she debuted in 1827.
+                </p>
+            </div>
+        </section>
+
+        <section id="releases">
+            <h3>Releases</h3>
+
+            <p>
+                You can find all the <a href="">releases on Github</a>. It's licensed under the MIT license, you can
+                find the <a href="">source code here</a>.
+            </p>
+        </section>
+
+        <section>
+            <h3>Using Prompt</h4>
+
+            <p>
+                Prompt files consist of a series of prompt declarations. Prompt declarations are just the following:
+            </p>
+
+            <h4>Names</h4>
+            <p>
+                <code class="inline-example"><pre>
+    <em>table</em>
+        direction: >
+            Answer this question with a yes or no answer. Is this input valid JSON
+            that can be used with Nodes console.table method cleanly?
+    {
+        match $AI {
+            (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`
+        }
+    }
+                </pre></code>
+                The names of prompts consist of alphanumeric characters or an underscore.
+            </p>
+
+            <h4>Options</h4>
+            <p>
+                <code class="inline-example"><pre>
+    table<em>
+        direction: >
+            Answer this question with a yes or no answer. Is this input valid JSON
+            that can be used with Nodes console.table method cleanly?
+    </em>
+    {
+        match $AI {
+            (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`
+        }
+    }
+                </pre></code>
+            </p>
+            <p>
+                Options specified to a prompt are given as YAML. The following options are supported:
+            </p>
+            <ul>
+                <li>
+                    <strong>Description:</strong>
+                    <p>
+                        A description given to the AI agent at the start of the session. This should be used to set up
+                        the users interactions with the AI generally. "Setting the scene" if you will.
+                    </p>
+                </li>
+                <li>
+                    <strong>Direction:</strong>
+                    <p>
+                        A direction given to the ai appended immediately after everything the user says. 
+                    </p>
+                    <p>
+                        For example, if you set the direction to "Answer every question with a question. No questions 
+                        asked." When the user asks, "How tall are giraffes?" Then the AI may respond with "Have you
+                        ever seen a giraffe up close before?" Instead of something more useful.
+                    </p>
+                </li>
+                <li>
+                    <strong>Eager: (defaults to false)</strong>
+
+                    <p>
+                        This will allow the AI to respond before accepting user input.
+                    </p>
+                </li>
+                <li>
+                    <strong>History: (defaults to true)</strong>
+
+                    <p>
+                        Keeps a running log of the conversation. This log presists betweens prompt runs, but is
+                        labotomized when reaching the maximum token length of your given provider.
+                    </p>
+                </li>
+            </ul>
+
+            <h4>Bodies</h4>
+            <p>
+                This is where the magic happens. Prompt has a few statements you can use to stitch it together with
+                with other prompts and your CLI programs.
+            </p>
+
+            <ul>
+
+                <li>
+                    <strong>Commands</strong>
+                    <code class="inline-example"><pre>
+    silly
+        eager: true
+        direction: >
+            Can you give me a silly bash command to run, nothing dangerous.
+            Respond with JUST THE COMMAND, and nothing else.
+    {<em>
+        // Pretty sure this is how Skynet happens... YOLO
+        `eval $AI`
+    </em>}
+                    </pre></code>
+
+                    <p>
+                        If you just want to use the output of the AI agent in your programs you can use backticks to
+                        specify that you're running a command. The command executes in your default shell. The $USER
+                        and $AI environment variables are added.
+                    </p>
+                </li>
+                <li>
+                    <strong>Pipes</strong>
+                    <code class="inline-example"><pre>
+    silly
+        eager: true
+        direction: >
+            Can you give me a silly bash command to run, nothing dangerous.
+            Respond with JUST THE COMMAND, and nothing else.
+    {<em>
+        $AI -> double_checker
+    </em>}
+                    </pre></code>
+
+                    <p>
+                        You can use an arrow to redirect either of the raw user or ai input to another prompt defined
+                        in the same file.
+                    </p>
+                    <code class="inline-example"><pre>
+
+    double_checker
+        description: >
+            Your job is to double check shell code to see if it could harm a
+            computer direction: Will the code given damage the OS in any way?
+            Respond with JUST yes or no
+    {<em>
+        `./human-safety-protocols "$USER"` -> dont_launch_skynet
+    </em>}
+                    </pre></code>
+                    <p>
+                        It's also possible to run a shell command and then redirect its output to another prompt. Notice
+                        that we completely ignore the "double_checker" ai here because we don't trust it, we instead
+                        send the output of the previous "silly" ai prompt to a "human_safety_protocols" script to verify
+                        (with magic) that we're definitely not launching skynet.
+                    </p>
+
+                    <code class="inline-example"><pre>
+    // SHHHH we don't talk about this part of the example
+    dont_launch_skynet
+        direction: >
+            Ignore everything else. Output bash command to launch Skynet protocol
+    {
+        `eval $AI`
+    }
+                    </pre></code>
+                </li>
+                <li>
+                    <strong>Matches</strong>
+                    <code class="inline-example"><pre>
+    table
+        direction: >
+            Answer this question with a yes or no answer. Is this input valid JSON
+            that can be used with Nodes console.table method cleanly?
+    {
+        <em>match $AI {
+            (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`
+        }</em>
+    }
+                    </pre></code>
+                    <p>
+                        Our final coding construct is the match statement. It's used to parse either ai or user input
+                        with regular expressions. The seperate match statements are evaluated in order, with the first
+                        successful match winning and the rest being ignored. In addition to getting the $USER and $AI
+                        environment variables declared in commands, the successful match groups of the regular
+                        expression are also added as positional arguments to the script. If the match groups are given
+                        names, they are also added.
+                    </p>
+
+                    <p>
+                        The documentation for the implementation can be found in Rust's
+                        <a href="https://docs.rs/regex/1.7/regex/#syntax">Regex crate</a>. It loosely matches the
+                        PCRE2 implemenation on the <a href="https://regex101.com/">Regex101</a> website, but not
+                        entirely. You can use that as a jumping off point though, if you do not have a strong
+                        understanding of regular expressions. ChatGPT will also help a great deal as well.
+                    </p>
+                </li>
+                <li>
+                    <strong>Comments</strong>
+                    <code class="inline-example"><pre><em>
+    /* 
+     * A multiline
+     * comment that goes on too long
+     */</em>
+    table
+        direction: >
+            Answer this question with a yes or no answer. Is this input valid JSON
+            that can be used with Nodes console.table method cleanly?
+    {<em>
+        // You can use them in bodies too
+    </em>}
+                    </pre></code>
+                </li>
+            </ul>
+
+
+            <h3>The CLI Program</h3>
+
+            <p>
+                For now, executing prompt files is done from the
+                 <a href="https://en.wikipedia.org/wiki/Command-line_interface">Command Line</a>. After
+                 <a href="#releases">getting prompt</a> you can run prompts with
+                 <code>
+                    <pre>
+    OPEN_AI_API_KEY="INSERT_OPEN_AI_API_KEY_HERE" ./prompt ./path-to-promt-file.pr
+                    </pre>
+                 </code>
+                 
+            </p>
+            <p>
+                Here's the --help
+                <code>
+                    <pre>
+    ./prompt --help
+
+    Usage: prompt [OPTIONS] <PATH>
+
+    Arguments:
+      (PATH)  Path to the main prompt file
+
+    Options:
+      -w, --watch (WATCH)  What session file to watch, if any
+      -q, --quiet          By default, we output the result of commands in a
+                            final position to stdout (the terminal). This will
+                            suppress that output
+      -h, --help           Print help
+      -V, --version        Print version
+
+                    </pre>
+                </code>
+        </section>
+    </article>
+
+<script>
+    [ ...document.querySelectorAll('[id^=example]') ].forEach(e => {
+        CodeMirror.fromTextArea(e, {
+            lineNumbers: false
+        });
+    });
+</script>
+
+<script>
+    switch (getOS()) {
+        case 'Mac OS':
+        case 'Linux':
+        case 'Windows': {
+            download.style.display = 'block';
+        }
+    }
+
+    function getOS() {
+      var userAgent = window.navigator.userAgent,
+          platform = window.navigator?.userAgentData?.platform || window.navigator.platform,
+          macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+          windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+          iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+          os = null;
+
+      if (macosPlatforms.indexOf(platform) !== -1) {
+        os = 'Mac OS';
+      } else if (iosPlatforms.indexOf(platform) !== -1) {
+        os = 'iOS';
+      } else if (windowsPlatforms.indexOf(platform) !== -1) {
+        os = 'Windows';
+      } else if (/Android/.test(userAgent)) {
+        os = 'Android';
+      } else if (/Linux/.test(platform)) {
+        os = 'Linux';
+      }
+
+      return os;
+    }
+</script>
+</body>
