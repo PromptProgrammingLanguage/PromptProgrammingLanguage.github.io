@@ -12,10 +12,21 @@
     <link rel="preload" href="assets/font/MajorMonoDisplay-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link href="assets/font/MajorMonoDisplay-Regular.ttf" rel="stylesheet" />
 
+    <link rel="preload" href="assets/logo/logo.png" as="image" />
+
     <style>
         @font-face {
             font-family: "MajorMono";
             src: url("assets/font/MajorMonoDisplay-Regular.ttf");
+        }
+
+        @keyframes transitionInLogo {
+            0% {
+                width: 25px;
+            }
+            100% {
+                width: 144px;
+            }
         }
 
         html {
@@ -36,12 +47,13 @@
         }
 
         header div.wrapper {
+            background: #fefefe;
             position: fixed;
             width: 200px;
         }
 
         header div.title {
-            transition: all 0.3s;
+            justify-content: center;
             padding-top: 10px;
             font-family: 'MajorMono';
             display: flex;
@@ -49,6 +61,11 @@
         }
 
         header div.title h1 {
+            width: 25px;
+            overflow: hidden;
+            animation: transitionInLogo 0.45s forwards;
+            animation-delay: 0.2s;
+            animation-timing-function: ease-in-out;
             margin: 0;
             line-height: 38px;
         }
