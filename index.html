@@ -9,12 +9,22 @@
     <script src="!/codemirror-5.65.12/codemirror.js"></script>
     <link href="!/codemirror-5.65.12/codemirror.css" rel="stylesheet" />
 
+    <link rel="preload" href="assets/font/MajorMonoDisplay-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link href="assets/font/MajorMonoDisplay-Regular.ttf" rel="stylesheet" />
+
     <style>
+        @font-face {
+            font-family: "MajorMono";
+            src: url("assets/font/MajorMonoDisplay-Regular.ttf");
+        }
+
         html {
             --highlight: rgb(0, 63, 255);
         }
 
         body {
+            color: #53585f;
+            background: #fefefe;
             display: grid;
             justify-content: center;
             grid-template-columns: 200px 640px;
@@ -25,9 +35,26 @@
             width: 100%;
         }
 
-        header div {
+        header div.wrapper {
             position: fixed;
             width: 200px;
+        }
+
+        header div.title {
+            transition: all 0.3s;
+            padding-top: 10px;
+            font-family: 'MajorMono';
+            display: flex;
+            height: 40px;
+        }
+
+        header div.title h1 {
+            margin: 0;
+            line-height: 38px;
+        }
+
+        header div.title img {
+            margin-left: -8px;
         }
 
         article {
@@ -91,8 +118,11 @@
 </head>
 <body>
     <header>
-        <div>
-            <h1>Prompt</h1>
+        <div class="wrapper">
+            <div class="title">
+                <h1>Prompt</h1>
+                <img alt="Prompt logo" src="assets/logo/logo.png" />
+            </div>
 
             <p>
                 Prompt is a programming language based on relational ai prompts. 
