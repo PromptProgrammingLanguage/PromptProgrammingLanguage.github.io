@@ -434,7 +434,8 @@ silly
                 </pre></code>
             </p>
             <p>
-                Options specified to a prompt are given as YAML. The following options are supported:
+                Options specified to a prompt are given as <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>. The
+                following options are supported:
             </p>
             <ul>
                 <li>
@@ -489,7 +490,7 @@ silly
             Can you give me a silly bash command to run, nothing dangerous.
             Respond with JUST THE COMMAND, and nothing else.
     {<em>
-        # Pretty sure this is how Skynet happens... YOLO
+        # Pretty sure this is how <a href="https://youtu.be/_Wlsd9mljiU?t=61">Skynet</a> happens... YOLO
         `eval $AI`
     </em>}
                     </pre></code>
@@ -497,11 +498,15 @@ silly
                     <p>
                         If you just want to use the output of the AI agent in your programs you can use backticks to
                         specify that you're running a command. The command executes in your default shell. The $USER
-                        and $AI environment variables are added.
+                        and $AI environment variables are added that reflect the last thing the ai and user said.
                     </p>
                 </li>
                 <li>
                     <strong>Pipes</strong>
+                    <p>
+                        Let's improve on the last example by adding some (faux) safety protocols to attempt to avoid
+                        the AI overlord takeover.
+                    </p>
                     <code class="inline-example"><pre>
     silly
         eager: true
@@ -514,8 +519,9 @@ silly
                     </pre></code>
 
                     <p>
-                        You can use an arrow to redirect either of the raw user or ai input to another prompt defined
-                        in the same file.
+                        You can use an arrow to redirect either of the $USER or $AI variables to one or more prompts
+                        defined in the same file. It's not shown above but you can use a comma to separate prompt names
+                        if you wanted to send the $AI variable to multiple prompts.
                     </p>
                     <code class="inline-example"><pre>
 
@@ -529,10 +535,11 @@ silly
     </em>}
                     </pre></code>
                     <p>
-                        It's also possible to run a shell command and then redirect its output to another prompt. Notice
-                        that we completely ignore the "double_checker" ai here because we don't trust it, we instead
-                        send the output of the previous "silly" ai prompt to a "human_safety_protocols" script to verify
-                        (with magic) that we're definitely not launching skynet.
+                        It's also possible to run a shell command and then redirect its output to one or more prompts.
+                        We completely ignore the "double_checker" ai here, for the sake of the example, and hell, it
+                        looks crafty. We instead send the output of the previous "silly" ai prompt to a
+                        "human_safety_protocols" script to verify (with magic) that we're definitely not launching
+                        skynet.
                     </p>
 
                     <code class="inline-example"><pre>
@@ -547,6 +554,10 @@ silly
                 </li>
                 <li>
                     <strong>Matches</strong>
+                    <p>
+                        Matches are where things get interesting. They allow you to run different branches of code
+                        based on regular expressions matched against what the $AI or $USER said.
+                    </p>
                     <code class="inline-example"><pre>
     table
         direction: >
@@ -554,17 +565,19 @@ silly
             that can be used with Nodes console.table method cleanly?
     {
         <em>match $AI {
-            (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`
+            (?i:^yes) => `node --eval "console.table(JSON.parse('$USER'))"`,
+            (.*) => `echo "This is not a tablable offense"`
         }</em>
     }
                     </pre></code>
                     <p>
                         Our final coding construct is the match statement. It's used to parse either ai or user input
                         with regular expressions. The seperate match statements are evaluated in order, with the first
-                        successful match winning and the rest being ignored. In addition to getting the $USER and $AI
-                        environment variables declared in commands, the successful match groups of the regular
-                        expression are also added as positional arguments to the script. If the match groups are given
-                        names, they are also added.
+                        successful match winning and the rest being ignored. Matches statements are separated by commas.
+
+                        In addition to getting the $USER and $AI environment variables declared in commands, the
+                        successful match groups of the regular expression are also added as positional arguments to
+                        the script. If the match groups are given names, they are also added.
                     </p>
 
                     <p>
