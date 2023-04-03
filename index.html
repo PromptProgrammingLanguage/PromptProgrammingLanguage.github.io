@@ -156,7 +156,7 @@
                 Prompt is a tiny language, you can learn it in less than fifteen minutes.
             </p>
 
-            <a id="download" href="" style="display: none;">Download</a>
+            <a id="download" href="" style="display:block;">Download</a>
         </div>
     </header>
 
@@ -339,7 +339,7 @@ toddler_two: (Pouting) Aww, no more blue?
                     <pre id="exampleSilly">
                     <code>
 # WARNING: DO NOT EXECUTE UNTRUSTED INPUT IN YOUR TERMINAL. YOU PROBABLY
-# SHOULDN'T RUN THIS CODE OUTSIDE OF A SANBOX, AND DEFINITELY NOT WITH
+# SHOULDN'T RUN THIS CODE OUTSIDE OF A SANDBOX, AND DEFINITELY NOT WITH
 # UNTRUSTED USER INPUT
 
 # The prompt's given here are vulnerable to the same prompt injection attacks
@@ -390,8 +390,10 @@ silly
             <h3>Releases</h3>
 
             <p>
-                You can find all the <a href="">releases on Github</a>. It's licensed under the MIT license, you can
-                find the <a href="">source code here</a>.
+                You can find all the
+                <a href="https://github.com/PromptProgrammingLanguage/prompt/releases">releases on Github</a>.
+                It's licensed under the MIT license, you can find the
+                <a href="https://github.com/PromptProgrammingLanguage/prompt">source code here</a>.
             </p>
         </section>
 
@@ -467,8 +469,8 @@ silly
                     <strong>History: (defaults to true)</strong>
 
                     <p>
-                        Keeps a running log of the conversation. This log presists betweens prompt runs, but is
-                        labotomized when reaching the maximum token length of your given provider.
+                        Keeps a running log of the conversation. This log persists betweens prompt runs, but is
+                        lobotomized when reaching the maximum token length of your given provider.
                     </p>
                 </li>
             </ul>
@@ -571,9 +573,8 @@ silly
     }
                     </pre></code>
                     <p>
-                        Our final coding construct is the match statement. It's used to parse either ai or user input
-                        with regular expressions. The seperate match statements are evaluated in order, with the first
-                        successful match winning and the rest being ignored. Matches statements are separated by commas.
+                        The separate match statements are evaluated in order, with the first successful match winning
+                        and the rest being ignored. Match statements are separated by commas.
 
                         In addition to getting the $USER and $AI environment variables declared in commands, the
                         successful match groups of the regular expression are also added as positional arguments to
@@ -612,7 +613,7 @@ silly
                  <a href="#releases">getting prompt</a> you can run prompts with
                  <code>
                     <pre>
-    OPEN_AI_API_KEY="INSERT_OPEN_AI_API_KEY_HERE" ./prompt ./path-to-promt-file.pr
+    OPEN_AI_API_KEY="INSERT_OPEN_AI_API_KEY_HERE" ./prompt ./path-to-prompt-file.pr
                     </pre>
                  </code>
                  
@@ -645,10 +646,17 @@ silly
 
 <script>
     switch (getOS()) {
-        case 'Mac OS':
-        case 'Linux':
-        case 'Windows': {
-            download.style.display = 'block';
+        case 'Mac OS': {
+            download.href = 'https://github.com/PromptProgrammingLanguage/prompt/releases/download/v0.2.0/prompt-macos.tar.gz';
+            break;
+        }
+        case 'Linux': {
+            download.href = 'https://github.com/PromptProgrammingLanguage/prompt/releases/download/v0.2.0/prompt-linux.tar.gz';
+            break;
+        }
+        default: {
+            download.style.display = 'none';
+            break;
         }
     }
 
